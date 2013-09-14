@@ -23,7 +23,11 @@ def fetch_gold_prices():
             "table//tr/td/span[text()='%s']/../../td/text()" % purity
         )[1:4]
 
-        prices["morning"], prices["evening"], prices["yesterday"] = map(float, quality_prices)
+        quality_prices = map(float, quality_prices)
+        if len(quality_prices) == 3:
+            prices["morning"], prices["evening"], prices["yesterday"] = quality_prices
+        else:
+            prices["morning"], prices["yesterday"] = quality_prices
 
         all_prices[purity] = prices
 
